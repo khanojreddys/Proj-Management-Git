@@ -1,8 +1,19 @@
 import React from 'react';
 
+<<<<<<< HEAD
+function ProjectList({ projects, searchQuery = '' }) {
+    if (projects.length === 0) {
+        const hasSearch = searchQuery.trim().length > 0;
+        return (
+            <p className="empty-message">
+                {hasSearch ? `No project matches "${searchQuery}".` : 'No projects found.'}
+            </p>
+        );
+=======
 function ProjectList({ projects }) {
     if (projects.length === 0) {
         return <p className="empty-message">No projects found.</p>;
+>>>>>>> 531d398efb1a17f74035e8ff2153ae5c8183a57f
     }
 
     return (
