@@ -21,13 +21,17 @@ export function createTask(taskData, existingTasks) {
 
     // TODO: Add more validation logic here (e.g. project validation, duplicate validation)
 
-    const newTask = {
-        id: `T-${Date.now()}`,
-        ...taskData,
-        status: taskData.status || "Active",
-        createdAt: new Date().toISOString()
-    };
-    
+const validPriorities = ["Low", "Medium", "High"];
+
+const newTask = {
+    id: `T-${Date.now()}`,
+    ...taskData,
+    priority: validPriorities.includes(taskData.priority)
+        ? taskData.priority
+        : "Medium",
+    status: taskData.status || "Active",
+    createdAt: new Date().toISOString()
+};
     // TODO: Add side effects here (e.g. trigger notifications)
 
     return [...existingTasks, newTask];
