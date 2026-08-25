@@ -33,6 +33,17 @@ function TaskList({ tasks, onCreateTask, projects, users }) {
 
     return (
         <div className="task-section">
+             {/* Developer C: Visual Search Input Bar Control Component */}
+            <div className="task-search-bar card" style={{ margin: "20px 0", padding: "15px" }}>
+                <h3>Search Tasks</h3>
+                <input 
+                    type="text"
+                    placeholder="Search by task title..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    style={{ width: "100%", padding: "10px", borderRadius: "4px", border: "1px solid #ccc" }}
+                />
+            </div>
             <div className="task-creation-form card">
                 <h3>Create New Task</h3>
                 <form onSubmit={handleSubmit}>
