@@ -3,7 +3,12 @@ import ProjectList from './ProjectList';
 import TaskList from './TaskList';
 import UserList from './UserList';
 import NotificationPanel from './NotificationPanel';
-import { projects as initialProjects, tasks as initialTasks, users as initialUsers, notifications as initialNotifications } from '../data/data';
+import {
+    projects as initialProjects,
+    tasks as initialTasks,
+    users as initialUsers,
+    notifications as initialNotifications
+} from '../data/data';
 import { getProjects } from '../utils/projectUtils';
 import { getTasks, createTask } from '../utils/taskUtils';
 import { calculateStats } from '../utils/dashboardUtils';
@@ -27,7 +32,7 @@ function Dashboard() {
         try {
             const updatedTasks = createTask(taskData, tasks);
             setTasks(updatedTasks);
-            
+
             // Note: Dev C might add notification logic here or in createTask directly
         } catch (error) {
             alert(error.message);
@@ -38,10 +43,31 @@ function Dashboard() {
         <div className="dashboard-container">
             <header className="dashboard-header">
                 <h1>Project Management Dashboard</h1>
-                
+
                 {/* CONFLICT ZONE 5: DASHBOARD CONTROLS */}
                 <div className="dashboard-controls">
-                    {/* Developers will add UI controls here: Project Search, Filters, Stats UI, Sorting UI */}
+                    {/* Task Status Filter - Developer D */}
+                    <div className="filter-control">
+                        <label htmlFor="task-status-filter">
+                            Task Status:
+                        </label>
+
+                        <select
+                            id="task-status-filter"
+                            value={taskFilters.status || 'All'}
+                            onChange={(event) =>
+                                setTaskFilters({
+                                    ...taskFilters,
+                                    status: event.target.value
+                                })
+                            }
+                        >
+                            <option value="All">All</option>
+                            <option value="Active">Active</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+
                     <div className="stat-card">
                         <span>Total Tasks: {stats.totalTasks}</span>
                     </div>
@@ -57,7 +83,12 @@ function Dashboard() {
 
                     <section className="dashboard-section">
                         <h2>Tasks</h2>
-                        <TaskList tasks={displayedTasks} onCreateTask={handleCreateTask} projects={projects} users={users} />
+                        <TaskList
+                            tasks={displayedTasks}
+                            onCreateTask={handleCreateTask}
+                            projects={projects}
+                            users={users}
+                        />
                     </section>
 
                     <section className="dashboard-section">
