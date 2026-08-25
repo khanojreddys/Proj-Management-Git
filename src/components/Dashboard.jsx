@@ -7,12 +7,14 @@ import { projects as initialProjects, tasks as initialTasks, users as initialUse
 import { getProjects } from '../utils/projectUtils';
 import { getTasks, createTask } from '../utils/taskUtils';
 import { calculateStats } from '../utils/dashboardUtils';
+import { getUsers } from '../utils/userUtils';
 
 function Dashboard() {
     const [projects, setProjects] = useState(initialProjects);
     const [tasks, setTasks] = useState(initialTasks);
     const [users, setUsers] = useState(initialUsers);
     const [notifications, setNotifications] = useState(initialNotifications);
+    const [userSearch, setUserSearch] = useState('');
 
     // Filters state
     const [projectFilters, setProjectFilters] = useState({});
@@ -21,6 +23,7 @@ function Dashboard() {
     // Processed Data
     const displayedProjects = getProjects(projects, projectFilters);
     const displayedTasks = getTasks(tasks, taskFilters);
+    const displayedUsers = getUsers(users, userSearch);
     const stats = calculateStats(displayedProjects, displayedTasks);
 
     const handleCreateTask = (taskData) => {
@@ -62,7 +65,14 @@ function Dashboard() {
 
                     <section className="dashboard-section">
                         <h2>Team Members</h2>
-                        <UserList users={users} />
+                        <input
+                            type="search"
+                            placeholder="Search users by name"
+                            value={userSearch}
+                            onChange={event => setUserSearch(event.target.value)}
+                            aria-label="Search users by name"
+                        />
+                        <UserList users={displayedUsers} />
                     </section>
                 </main>
 
