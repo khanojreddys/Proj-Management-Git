@@ -41,7 +41,13 @@ function Dashboard() {
                 
                 {/* CONFLICT ZONE 5: DASHBOARD CONTROLS */}
                 <div className="dashboard-controls">
-                    {/* Developers will add UI controls here: Project Search, Filters, Stats UI, Sorting UI */}
+                    <input
+                        type="text"
+                        placeholder="Search projects by name"
+                        value={projectFilters.name || ""}
+                        onChange={(e) => setProjectFilters({ ...projectFilters, name: e.target.value })}
+                        aria-label="Search projects by name"
+                    />
                     <div className="stat-card">
                         <span>Total Tasks: {stats.totalTasks}</span>
                     </div>
@@ -52,7 +58,7 @@ function Dashboard() {
                 <main className="main-content">
                     <section className="dashboard-section">
                         <h2>Projects</h2>
-                        <ProjectList projects={displayedProjects} />
+                        <ProjectList projects={displayedProjects} searchQuery={projectFilters.name || ""} />
                     </section>
 
                     <section className="dashboard-section">
