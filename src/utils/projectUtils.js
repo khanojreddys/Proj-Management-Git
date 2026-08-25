@@ -1,7 +1,7 @@
 export function getProjects(projects, filters = {}) {
     let filteredProjects = [...projects];
-<<<<<<< HEAD
     const searchName = (filters.name || "").trim().toLowerCase();
+    const selectedStatus = (filters.status || "").trim().toLowerCase();
 
     if (searchName) {
         filteredProjects = filteredProjects.filter((project) =>
@@ -9,14 +9,11 @@ export function getProjects(projects, filters = {}) {
         );
     }
 
-    return filteredProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-}
-    
-=======
-
-    // TODO: Apply filters here based on the filters object
-    // Developers will add search, status filters, etc. in this section.
+    if (selectedStatus) {
+        filteredProjects = filteredProjects.filter(
+            (project) => (project.status || "").toLowerCase() === selectedStatus
+        );
+    }
 
     return filteredProjects.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 }
->>>>>>> 531d398efb1a17f74035e8ff2153ae5c8183a57f
