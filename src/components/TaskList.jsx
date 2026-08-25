@@ -3,18 +3,33 @@ import React, { useState } from 'react';
 function TaskList({ tasks, onCreateTask, projects, users }) {
     const [newTaskTitle, setNewTaskTitle] = useState('');
     const [newTaskProjectId, setNewTaskProjectId] = useState('');
+    
+    // Developer C: Added search query state
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleSubmit = (e) => {
         e.preventDefault();
         onCreateTask({
             title: newTaskTitle,
             projectId: newTaskProjectId,
-            priority: "Medium", // Default
+            priority: "Medium",
             status: "Active"
         });
-        
-        // TODO: Dev D might want to reset the form here
+        setNewTaskTitle('');
+        setNewTaskProjectId('');
     };
+
+    // Developer C: Modified getTasks() helper function for case-insensitive search
+    const getTasks = () => {
+        return tasks.filter(task => {
+            const matchesSearch = task.title
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase());
+            return matchesSearch;
+        });
+    };
+
+    const displayedTasks = getTasks();
 
     return (
         <div className="task-section">
@@ -40,11 +55,11 @@ function TaskList({ tasks, onCreateTask, projects, users }) {
                 </form>
             </div>
 
-            {tasks.length === 0 ? (
+            {displayedTasks.length === 0 ? (
                 <p className="empty-message">No tasks found.</p>
             ) : (
                 <div className="list-container task-list">
-                    {tasks.map(task => (
+                    {displayedTasks.map(task => (
                         <div key={task.id} className="list-item card">
                             <div className="card-header">
                                 <h4>{task.title}</h4>
